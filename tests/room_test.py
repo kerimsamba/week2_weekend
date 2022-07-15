@@ -8,9 +8,9 @@ class TestRoom(unittest.TestCase):
     
     def setUp(self):
         self.room = Room("Karoake Room", 2, 5, 0)
-        self.guest = Guest("Arthur Dent", 20)
-        self.guest2 = Guest("Frank Zappa", 30)
-        self.guest3 = Guest("Sophie Ellis-Bexter", 40)
+        self.guest = Guest("Arthur Dent", 20, "Wonderwall")
+        self.guest2 = Guest("Frank Zappa", 30, "Do they know it's Xmas time")
+        self.guest3 = Guest("Sophie Ellis-Bexter", 40, "Murder on the dance floor")
         self.song = Song("Wonderwall")
         
     def test_room_exists(self):
@@ -21,7 +21,7 @@ class TestRoom(unittest.TestCase):
         self.assertEqual("Arthur Dent", self.room.guest_list[0])
 
     def test_room_has_song_on_playlist(self):
-        self.room.add_song_to_playlist("Wonderwall")
+        self.room.add_song_to_playlist(self.song.name)
         self.assertEqual("Wonderwall", self.room.playlist[0])
 
     def test_guest_can_leave_room(self):
@@ -45,6 +45,15 @@ class TestRoom(unittest.TestCase):
         self.room.check_in_guest(self.guest.name)
         self.guest.guest_pays_entry_fee(self.room.entry_fee)
         self.assertEqual(5, self.room.money)
+
+    def test_guests_favourite_song(self):
+        self.room.check_in_guest(self.guest.name)
+        self.room.add_song_to_playlist(self.song.name)
+        self.assertEqual("Woohoo!", self.guest.guests_favourite_song(self.room.playlist))
+
+        
+
+
 
 
 
